@@ -110,11 +110,11 @@ function ComputerWin(results) {
 }
 
 function playerVictory(playerPoints) {
-  if (playerPoints === 5) return "Player Wins";
+  if (playerPoints === "5") alert("Player Wins");
 }
 
 function computerVictory(computerPoints) {
-  if (computerPoints === 5) return "Computer Wins";
+  if (computerPoints === "5") return "Computer Wins";
 }
 
 /* PLAYS A ROUND OF ROCK PAPER SCISSORS */
