@@ -1,153 +1,90 @@
-/* VARIABLES AND LISTENERS */
-let rock = "rock";
-let paper = "paper";
-let scissors = "scissors";
+/* VARIABLES */
+var playerPoints = 0;
+var computerPoints = 0;
 
-let playerPoints = 0;
-let computerPoints = 0;
-
+const rockButton = document.querySelector(".rockButton");
+const paperButton = document.querySelector(".paperButton");
+const scissorsButton = document.querySelector(".scissorsButton");
 const results = document.querySelector(".results");
-
 const playerScore = document.querySelector(".playerScore");
 const computerScore = document.querySelector(".computerScore");
 
-/* ROCK BUTTON */
-const rockButton = document.querySelector(".rockButton");
-rockButton.addEventListener(
-  "click",
-  () => (results.textContent = playRound(rock, getComputerChoice()))
-);
-rockButton.addEventListener(
-  "click",
-  () =>
-    (playerScore.textContent =
-      "Player Score: " + playerWin(results.textContent))
-);
-rockButton.addEventListener(
-  "click",
-  () =>
-    (computerScore.textContent =
-      "Computer Score: " + ComputerWin(results.textContent))
-);
-rockButton.addEventListener(
-  "click",
-  (results.textContent = playerVictory(playerPoints))
-);
-rockButton.addEventListener(
-  "click",
-  (results.textContent = computerVictory(computerPoints))
-);
+/* EVENTS */
+rockButton.addEventListener("click", () => playGame("rock"));
+paperButton.addEventListener("click", () => playGame("paper"));
+scissorsButton.addEventListener("click", () => playGame("scissors"));
 
-/* PAPER BUTTON */
-const paperButton = document.querySelector(".paperButton");
-paperButton.addEventListener(
-  "click",
-  () => (results.textContent = playRound(paper, getComputerChoice()))
-);
-paperButton.addEventListener(
-  "click",
-  () =>
-    (playerScore.textContent =
-      "Player Score: " + playerWin(results.textContent))
-);
-paperButton.addEventListener(
-  "click",
-  () =>
-    (computerScore.textContent =
-      "Computer Score: " + ComputerWin(results.textContent))
-);
-paperButton.addEventListener(
-  "click",
-  (results.textContent = playerVictory(playerPoints))
-);
-paperButton.addEventListener(
-  "click",
-  (results.textContent = computerVictory(computerPoints))
-);
+/* FUNCTIONS */
+function playGame(playerChoice) {
+  playRound(playerChoice, getComputerChoice());
 
-/* SCISSORS BUTTON */
-const scissorsButton = document.querySelector(".scissorsButton");
-scissorsButton.addEventListener(
-  "click",
-  () => (results.textContent = playRound(scissors, getComputerChoice()))
-);
-scissorsButton.addEventListener(
-  "click",
-  () =>
-    (playerScore.textContent =
-      "Player Score: " + playerWin(results.textContent))
-);
-scissorsButton.addEventListener(
-  "click",
-  () =>
-    (computerScore.textContent =
-      "Computer Score: " + ComputerWin(results.textContent))
-);
-scissorsButton.addEventListener(
-  "click",
-  (results.textContent = playerVictory(playerPoints))
-);
-scissorsButton.addEventListener(
-  "click",
-  (results.textContent = computerVictory(computerPoints))
-);
+  if (playerPoints === 5) {
+    alert("You Win!");
+    playerPoints = 0;
+    playerScore.textContent = "Player Score: " + playerPoints;
+    computerPoints = 0;
+    computerScore.textContent = "Computer Score: " + computerPoints;
+  }
 
-/* SCORING FUNCTIONS*/
-function playerWin(results) {
-  if (results.includes("win")) {
-    return (playerPoints = parseInt(playerPoints) + 1);
-  } else {
-    return playerPoints;
+  if (computerPoints === 5) {
+    alert("You Lose!");
+    playerPoints = 0;
+    playerScore.textContent = "Player Score: " + playerPoints;
+    computerPoints = 0;
+    computerScore.textContent = "Computer Score: " + computerPoints;
   }
 }
 
-function ComputerWin(results) {
-  if (results.includes("lose")) {
-    return (computerPoints = parseInt(computerPoints) + 1);
-  } else {
-    return computerPoints;
-  }
-}
-
-function playerVictory(playerPoints) {
-  if (playerPoints === "5") alert("Player Wins");
-}
-
-function computerVictory(computerPoints) {
-  if (computerPoints === "5") return "Computer Wins";
-}
-
-/* PLAYS A ROUND OF ROCK PAPER SCISSORS */
 function playRound(playerChoice, computerChoice) {
-  let outcome;
-
-  if (playerChoice === "rock" && computerChoice === "paper") {
-    outcome = "paper beats rock, you lose!";
-  } else if (playerChoice === "rock" && computerChoice === "scissors") {
-    outcome = "rock beats scissors, you win!";
-  } else if (playerChoice === "paper" && computerChoice === "rock") {
-    outcome = "paper beats rock, you win!";
-  } else if (playerChoice === "paper" && computerChoice === "scissors") {
-    outcome = "scissors beats paper, you lose!";
-  } else if (playerChoice === "scissors" && computerChoice === "rock") {
-    outcome = "rock beats scissors, you lose!";
-  } else if (playerChoice === "scissors" && computerChoice === "paper") {
-    outcome = "scissors beats paper, you win!";
-  } else if (playerChoice === computerChoice) {
-    outcome = "it was a tie!";
+  switch (playerChoice) {
+    case "rock":
+      if (computerChoice === "scissors") {
+        results.textContent = "rock beats paper";
+        playerPoints = parseInt(playerPoints) + 1;
+        playerScore.textContent = "Player Score: " + playerPoints;
+      } else if (computerChoice === "paper") {
+        results.textContent = "paper beats rock";
+        computerPoints = parseInt(computerPoints) + 1;
+        computerScore.textContent = "Computer Score: " + computerPoints;
+      } else {
+        results.textContent = "tie";
+      }
+      break;
+    case "paper":
+      if (computerChoice === "rock") {
+        results.textContent = "paper beats rock";
+        playerPoints = parseInt(playerPoints) + 1;
+        playerScore.textContent = "Player Score: " + playerPoints;
+      } else if (computerChoice === "scissors") {
+        results.textContent = "scissor beats paper";
+        computerPoints = parseInt(computerPoints) + 1;
+        computerScore.textContent = "Computer Score: " + computerPoints;
+      } else {
+        results.textContent = "tie";
+      }
+      break;
+    case "scissors":
+      if (computerChoice === "paper") {
+        results.textContent = "scissors beat paper";
+        playerPoints = parseInt(playerPoints) + 1;
+        playerScore.textContent = "Player Score: " + playerPoints;
+      } else if (computerChoice === "rock") {
+        results.textContent = "rock beats scissors";
+        computerPoints = parseInt(computerPoints) + 1;
+        computerScore.textContent = "Computer Score: " + computerPoints;
+      } else {
+        results.textContent = "tie";
+      }
+      break;
   }
-
-  let extraOutcome = "Computer chose " + computerChoice + " " + outcome;
-  return extraOutcome;
 }
 
-/* CREATING A CHOICE FOR THE COMPUTER */
 function getComputerChoice(computerSelection) {
-  let num = Math.floor(Math.random() * 3);
+  let number = Math.floor(Math.random() * 3);
 
-  if (num === 0) {
+  if (number === 0) {
     computerSelection = "rock";
-  } else if (num === 1) {
+  } else if (number === 1) {
     computerSelection = "paper";
   } else {
     computerSelection = "scissors";
